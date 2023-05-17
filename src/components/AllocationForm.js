@@ -33,6 +33,19 @@ const AllocationForm = (props) => {
             }
     };
 
+    const handleChange = (e) => {
+        const validNumberRegex = /^[0-9]+$/;
+        let targ = e.target.value;
+
+        if (!validNumberRegex.test(targ)) {
+            alert("Please enter a number!");
+            e.target.value = ""
+        } else {
+            setCost(e.target.value)
+            
+        }
+    }
+
     return (
         <div>
             <div className='row'>
@@ -65,7 +78,8 @@ const AllocationForm = (props) => {
                         id='cost'
                         value={cost}
                         style={{ marginLeft: '2rem' , size: 10}}
-                        onChange={(event) => setCost(event.target.value)}>
+                        onInput={handleChange}
+                        >
                         </input>
 
                     <button className="btn btn-primary" onClick={submitEvent} style={{ marginLeft: '2rem' }}>
