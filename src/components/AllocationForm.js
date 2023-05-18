@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 
 const AllocationForm = (props) => {
-    const { dispatch,remaining  } = useContext(AppContext);
+    const { dispatch, remaining, currency  } = useContext(AppContext);
 
     const [name, setName] = useState('');
     const [cost, setCost] = useState('');
@@ -33,6 +33,19 @@ const AllocationForm = (props) => {
             }
     };
 
+    const handleChange = (e) => {
+        const validNumberRegex = /^[0-9]+$/;
+        let targ = e.target.value;
+
+        if (!validNumberRegex.test(targ)) {
+            alert("Please enter a number!");
+            e.target.value = ""
+        } else {
+            setCost(e.target.value)
+            
+        }
+    }
+
     return (
         <div>
             <div className='row'>
@@ -59,13 +72,15 @@ const AllocationForm = (props) => {
                 <option value="Reduce" name="Reduce">Reduce</option>
                   </select>
 
+                    <span style={{marginLeft: '1rem'}}>{currency}</span>
                     <input
                         required='required'
                         type='number'
                         id='cost'
                         value={cost}
-                        style={{ marginLeft: '2rem' , size: 10}}
-                        onChange={(event) => setCost(event.target.value)}>
+                        style={{ marginLeft: '0.5rem' , size: 10}}
+                        onInput={handleChange}
+                        >
                         </input>
 
                     <button className="btn btn-primary" onClick={submitEvent} style={{ marginLeft: '2rem' }}>
